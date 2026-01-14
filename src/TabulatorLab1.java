@@ -1,4 +1,6 @@
 public class TabulatorLab1 {
+    // Составить программу вычисления и печати таблицы значений функции при заданных значениях параметров
+
     private final static double a = 12.122;
     private final static double b = -16.31;
 

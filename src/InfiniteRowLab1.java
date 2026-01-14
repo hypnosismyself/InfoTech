@@ -1,4 +1,6 @@
 public class InfiniteRowLab1 {
+    // Составить программу вычисления и печати таблицы значений функции, которая является суммой бесконечного ряда
+
     private final static double Xn = 0.1, Xk = 0.9, prdX = 0.1;
     private final static double eps = 0.0001;
 
