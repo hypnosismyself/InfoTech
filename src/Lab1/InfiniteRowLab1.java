@@ -1,3 +1,5 @@
+package Lab1;
+
 public class InfiniteRowLab1 {
     // Составить программу вычисления и печати таблицы значений функции, которая является суммой бесконечного ряда
 
@@ -18,7 +20,7 @@ public class InfiniteRowLab1 {
                 n += 1;
             }
 
-            System.out.print(String.format("%.3f", x));
+            System.out.printf("%.3f", x);
             System.out.println("\t\t" + String.format("%.3f", y));
 
             x += prdX;

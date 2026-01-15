@@ -1,3 +1,5 @@
+package Lab2;
+
 import java.util.Arrays;
 
 public class ArraysComparisonLab2 {
@@ -10,6 +12,8 @@ public class ArraysComparisonLab2 {
     private static int[] array2 = {0, 1, 4, 5};
 
     private static int sequential_search_with_barrier(int value) {
+        // Поиск последовательным перебором
+
         int[] tempArray = Arrays.copyOf(array1, array1.length + 1);
         tempArray[tempArray.length - 1] = value;
         int i = 0;
@@ -20,6 +24,8 @@ public class ArraysComparisonLab2 {
     }
 
     private static void selection_sort() {
+        // Сортировка выбором минимального элемента
+
         for (int i = 0; i < array1.length - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < array1.length; j++) {
@@ -34,6 +40,8 @@ public class ArraysComparisonLab2 {
     }
 
     private static void insertion_sort() {
+        // Сортировка методов вставки
+
         for (int i = 1; i < array2.length; i++) {
             int key = array2[i];
             int j = i - 1;
@@ -46,6 +54,8 @@ public class ArraysComparisonLab2 {
     }
 
     private static int binary_search(int value) {
+        // Бинарный поиск
+
         int low = 0;
         int high = array2.length - 1;
         while (low <= high) {
@@ -61,8 +71,9 @@ public class ArraysComparisonLab2 {
         return -1;
     }
 
-    // Метод для слияния двух отсортированных массивов
     private static int[] merge_arrays() {
+        // Слияние массивов
+
         int[] mergedArray = new int[array1.length + array2.length];
         int i = 0, j = 0, k = 0;
         while (i < array1.length && j < array2.length) {
