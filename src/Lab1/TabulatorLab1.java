@@ -1,3 +1,5 @@
+package Lab1;
+
 public class TabulatorLab1 {
     // Составить программу вычисления и печати таблицы значений функции при заданных значениях параметров
 
@@ -23,7 +25,7 @@ public class TabulatorLab1 {
                 y = Math.pow(Math.log(a * x + b), 2) - 2.75 * ((a * b * x) / Math.sqrt(a * a + b * x));
             }
 
-            System.out.print(String.format("%.3f", x));
+            System.out.printf("%.3f", x);
             System.out.println("\t\t" + String.format("%.3f", y));
 
             x += dX;
