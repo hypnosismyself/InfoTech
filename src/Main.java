@@ -9,4 +9,6 @@ void main() {
 ////    Lab2.ArraysComparisonLab2.calc(4);
 //    System.out.println("Лабораторная 2. Задание 2");
 ////    Lab2.SortWordLab2.bubble_sort();
+//    System.out.println("Лабораторная 3. Задание 1");
+////    Lab3.MatrixLab3.calc();
 }
