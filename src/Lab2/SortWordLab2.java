@@ -18,6 +18,6 @@ public class SortWordLab2 {
                 }
             }
         }
-        System.out.print(new String(chars));
+        System.out.println(new String(chars));
     }
 }

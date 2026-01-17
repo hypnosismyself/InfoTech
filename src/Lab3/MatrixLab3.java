@@ -11,37 +11,37 @@ public class MatrixLab3 {
             {8, 9, 10, 11}
     };
 
-    public static String count_negative_in_zero_rows() {
+    public static String count_negative_in_zero_rows(int[][] matrix) {
         // Определить количество отрицательных элементов в строках с нулевыми элементами
 
         int count = 0;
-        for (int i = 0; i < matrix.length; i++) {
+        for (int[] ints : matrix) {
             boolean hasZero = false;
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 0) {
+            for (int anInt : ints) {
+                if (anInt == 0) {
                     hasZero = true;
                     break;
                 }
             }
             if (hasZero) {
-                for (int j = 0; j < matrix[i].length; j++) {
-                    if (matrix[i][j] < 0) {
+                for (int anInt : ints) {
+                    if (anInt < 0) {
                         count++;
                     }
                 }
             }
         }
-        return Double.toString(count);
+        return Integer.toString(count);
     }
 
-    public static String max_average_in_columns() {
+    public static String max_average_in_columns(int[][] matrix) {
         // Определить максимальное значение среди средних арифметических значений в каждом столбце матрицы
 
         double maxAverage = Double.NEGATIVE_INFINITY;
         for (int j = 0; j < matrix[0].length; j++) {
             double sum = 0.0;
-            for (int i = 0; i < matrix.length; i++) {
-                sum += matrix[i][j];
+            for (int[] ints : matrix) {
+                sum += ints[j];
             }
             double average = sum / matrix.length;
             if (average > maxAverage) {
@@ -52,7 +52,7 @@ public class MatrixLab3 {
     }
 
     public static void calc() {
-        System.out.println("Количество отрицательных элементов в строках с нулевыми элементами: " + count_negative_in_zero_rows());
-        System.out.println("Максимальное значение среди средних в каждом столбце: " + max_average_in_columns());
+        System.out.println("Количество отрицательных элементов в строках с нулевыми элементами: " + count_negative_in_zero_rows(matrix));
+        System.out.println("Максимальное значение среди средних в каждом столбце: " + max_average_in_columns(matrix));
     }
 }
