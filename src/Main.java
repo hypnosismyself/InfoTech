@@ -15,7 +15,7 @@ void main() {
     Lab2.ArrayCalcsLab2.calc();
     System.out.println();
 
-    System.out.println("Лабораторная 2. Задание 2");
+    System.out.println("Лабораторная 2. Задание 3");
     Lab2.SortWordLab2.bubble_sort();
     System.out.println();
 
