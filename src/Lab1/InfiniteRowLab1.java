@@ -10,7 +10,7 @@ public class InfiniteRowLab1 {
         StringBuilder res = new StringBuilder();
 
         double x = Xn;
-        res.append("x\t\ty\n");
+        res.append("x\t\t\ty\n");
 
         while (x <= Xk) {
             double T = 1, y = 0;
