@@ -2,7 +2,6 @@ package Lab4;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Lab4 extends JFrame {
@@ -36,19 +35,9 @@ public class Lab4 extends JFrame {
         // Доп. настройка компонентов
         resultLab1TextArea.setEditable(false);
 
-        calcInfiniteRowsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultLab1TextArea.setText(Lab1.TabulatorLab1.calc());
-            }
-        });
-
-        calcTabulationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultLab1TextArea.setText(Lab1.InfiniteRowLab1.calc());
-            }
-        });
+        // Навешиваем слушатели событий
+        calcInfiniteRowsButton.addActionListener(_ -> resultLab1TextArea.setText(Lab1.TabulatorLab1.calc()));
+        calcTabulationButton.addActionListener(_ -> resultLab1TextArea.setText(Lab1.InfiniteRowLab1.calc()));
 
         // Добавление компонентов на форму
         infiniteRowsPanel.add(calcInfiniteRowsButton);
@@ -78,19 +67,17 @@ public class Lab4 extends JFrame {
         calcPositivesMultiplicationButton.setMaximumSize(new Dimension(200, 50));
         scrollPane.setPreferredSize(new Dimension(400, 150));
 
-        ActionListener parseAndProcess = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                double[] array = parseStringToDoubleArray(inputArrayField.getText());
+        // Слушатель событий для кнопок
+        ActionListener parseAndProcess = e -> {
+            double[] array = parseStringToDoubleArray(inputArrayField.getText());
 
-                JButton source = (JButton) e.getSource();
-                if (source == calcPositivesMultiplicationButton) {
-                    String result = Lab2.ArrayCalcsLab2.get_positives_multiplication(array);
-                    resultLab2TextArea.setText("Произведение положительных элементов: " + result);
-                } else if (source == sumBeforeMinButton) {
-                    String result = Lab2.ArrayCalcsLab2.sum_before_min_element(array);
-                    resultLab2TextArea.setText("Сумма элементов до минимального: " + result);
-                }
+            JButton source = (JButton) e.getSource();
+            if (source == calcPositivesMultiplicationButton) {
+                String result = Lab2.ArrayCalcsLab2.get_positives_multiplication(array);
+                resultLab2TextArea.setText("Произведение положительных элементов: " + result);
+            } else if (source == sumBeforeMinButton) {
+                String result = Lab2.ArrayCalcsLab2.sum_before_min_element(array);
+                resultLab2TextArea.setText("Сумма элементов до минимального: " + result);
             }
         };
 
@@ -129,136 +116,133 @@ public class Lab4 extends JFrame {
         resultScrollPane.setPreferredSize(new Dimension(400, 250));
         countNegativeButton.setMaximumSize(new Dimension(200, 50));
 
-        // Метод для парсинга матрицы из текстовой области
-        ActionListener parseAndProcessMatrix = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String matrixText = matrixInputArea.getText().trim();
+        // Слушатель событий для кнопок
+        ActionListener parseAndProcessMatrix = e -> {
+            try {
+                String matrixText = matrixInputArea.getText().trim();
 
-                    if (matrixText.isEmpty()) {
-                        resultLab3TextArea.setText("Ошибка: Введите матрицу в текстовое поле");
-                        return;
-                    }
-
-                    // Разбиваем на строки
-                    String[] lines = matrixText.split("\n");
-
-                    // Определяем количество строк и столбцов
-                    int rows = lines.length;
-                    if (rows == 0) {
-                        resultLab3TextArea.setText("Ошибка: Матрица не содержит строк");
-                        return;
-                    }
-
-                    // Определяем количество столбцов по первой строке
-                    String[] firstRowElements = lines[0].trim().split("\\s+");
-                    int cols = firstRowElements.length;
-
-                    // Проверяем, что все строки имеют одинаковое количество элементов
-                    for (int i = 0; i < rows; i++) {
-                        String[] elements = lines[i].trim().split("\\s+");
-                        if (elements.length != cols) {
-                            resultLab3TextArea.setText(String.format(
-                                    """
-                                            Ошибка: Несоответствие количества элементов
-                                            Строка 1: %d элементов, Строка %d: %d элементов
-                                            Все строки матрицы должны иметь одинаковое количество элементов""",
-                                    cols, i + 1, elements.length));
-                            return;
-                        }
-                    }
-
-                    // Парсим матрицу
-                    int[][] matrix = new int[rows][cols];
-                    StringBuilder errors = new StringBuilder();
-
-                    for (int i = 0; i < rows; i++) {
-                        String[] elements = lines[i].trim().split("\\s+");
-                        for (int j = 0; j < cols; j++) {
-                            try {
-                                matrix[i][j] = Integer.parseInt(elements[j]);
-                            } catch (NumberFormatException ex) {
-                                errors.append(String.format(
-                                        "Строка %d, столбец %d: '%s' не является целым числом\n",
-                                        i + 1, j + 1, elements[j]));
-                            }
-                        }
-                    }
-
-                    // Если есть ошибки парсинга
-                    if (!errors.isEmpty()) {
-                        resultLab3TextArea.setText("Ошибки при парсинге матрицы:\n" + errors +
-                                "\nВсе элементы матрицы должны быть целыми числами");
-                        return;
-                    }
-
-                    // Выполняем нужную операцию
-                    if (e.getSource() == countNegativeButton) {
-                        String result = Lab3.MatrixLab3.count_negative_in_zero_rows(matrix);
-
-                        // Форматируем вывод матрицы
-                        StringBuilder matrixOutput = new StringBuilder();
-                        matrixOutput.append("Матрица ").append(rows).append("x").append(cols).append(":\n");
-
-                        // Определяем максимальную длину числа для выравнивания
-                        int maxLength = 0;
-                        for (int i = 0; i < rows; i++) {
-                            for (int j = 0; j < cols; j++) {
-                                int length = String.valueOf(matrix[i][j]).length();
-                                if (length > maxLength) maxLength = length;
-                            }
-                        }
-
-                        // Выводим матрицу
-                        for (int i = 0; i < rows; i++) {
-                            for (int j = 0; j < cols; j++) {
-                                matrixOutput.append(String.format("%" + (maxLength + 2) + "d", matrix[i][j]));
-                            }
-                            matrixOutput.append("\n");
-                        }
-
-                        resultLab3TextArea.setText(matrixOutput +
-                                "\nКоличество отрицательных элементов в строках, содержащих ноль: " + result);
-
-                    } else if (e.getSource() == maxAverageButton) {
-                        String result = Lab3.MatrixLab3.max_average_in_columns(matrix);
-
-                        // Форматируем вывод матрицы
-                        StringBuilder matrixOutput = new StringBuilder();
-                        matrixOutput.append("Матрица ").append(rows).append("x").append(cols).append(":\n");
-
-                        // Определяем максимальную длину числа для выравнивания
-                        int maxLength = 0;
-                        for (int i = 0; i < rows; i++) {
-                            for (int j = 0; j < cols; j++) {
-                                int length = String.valueOf(matrix[i][j]).length();
-                                if (length > maxLength) maxLength = length;
-                            }
-                        }
-
-                        // Выводим матрицу
-                        for (int i = 0; i < rows; i++) {
-                            for (int j = 0; j < cols; j++) {
-                                matrixOutput.append(String.format("%" + (maxLength + 2) + "d", matrix[i][j]));
-                            }
-                            matrixOutput.append("\n");
-                        }
-
-                        resultLab3TextArea.setText(matrixOutput + "\nМаксимальное среднее арифметическое среди столбцов: " + result);
-                    }
-
-                } catch (Exception ex) {
-                    resultLab3TextArea.setText("Ошибка: " + ex.getMessage() +
-                            "\n\nФормат ввода матрицы:\n" +
-                            "• Элементы в строке разделяйте пробелами\n" +
-                            "• Каждая строка матрицы - с новой строки\n" +
-                            "• Все элементы должны быть целыми числами\n\n" +
-                            "Пример матрицы 3x4:\n" +
-                            "1 2 -3 0\n" +
-                            "-5 0 7 8\n" +
-                            "9 10 -11 12");
+                if (matrixText.isEmpty()) {
+                    resultLab3TextArea.setText("Ошибка: Введите матрицу в текстовое поле");
+                    return;
                 }
+
+                // Разбиваем на строки
+                String[] lines = matrixText.split("\n");
+
+                // Определяем количество строк и столбцов
+                int rows = lines.length;
+                if (rows == 0) {
+                    resultLab3TextArea.setText("Ошибка: Матрица не содержит строк");
+                    return;
+                }
+
+                // Определяем количество столбцов по первой строке
+                String[] firstRowElements = lines[0].trim().split("\\s+");
+                int cols = firstRowElements.length;
+
+                // Проверяем, что все строки имеют одинаковое количество элементов
+                for (int i = 0; i < rows; i++) {
+                    String[] elements = lines[i].trim().split("\\s+");
+                    if (elements.length != cols) {
+                        resultLab3TextArea.setText(String.format(
+                                """
+                                        Ошибка: Несоответствие количества элементов
+                                        Строка 1: %d элементов, Строка %d: %d элементов
+                                        Все строки матрицы должны иметь одинаковое количество элементов""",
+                                cols, i + 1, elements.length));
+                        return;
+                    }
+                }
+
+                // Парсим матрицу
+                int[][] matrix = new int[rows][cols];
+                StringBuilder errors = new StringBuilder();
+
+                for (int i = 0; i < rows; i++) {
+                    String[] elements = lines[i].trim().split("\\s+");
+                    for (int j = 0; j < cols; j++) {
+                        try {
+                            matrix[i][j] = Integer.parseInt(elements[j]);
+                        } catch (NumberFormatException ex) {
+                            errors.append(String.format(
+                                    "Строка %d, столбец %d: '%s' не является целым числом\n",
+                                    i + 1, j + 1, elements[j]));
+                        }
+                    }
+                }
+
+                // Если есть ошибки парсинга
+                if (!errors.isEmpty()) {
+                    resultLab3TextArea.setText("Ошибки при парсинге матрицы:\n" + errors +
+                            "\nВсе элементы матрицы должны быть целыми числами");
+                    return;
+                }
+
+                // Выполняем нужную операцию
+                if (e.getSource() == countNegativeButton) {
+                    String result = Lab3.MatrixLab3.count_negative_in_zero_rows(matrix);
+
+                    // Форматируем вывод матрицы
+                    StringBuilder matrixOutput = new StringBuilder();
+                    matrixOutput.append("Матрица ").append(rows).append("x").append(cols).append(":\n");
+
+                    // Определяем максимальную длину числа для выравнивания
+                    int maxLength = 0;
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
+                            int length = String.valueOf(matrix[i][j]).length();
+                            if (length > maxLength) maxLength = length;
+                        }
+                    }
+
+                    // Выводим матрицу
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
+                            matrixOutput.append(String.format("%" + (maxLength + 2) + "d", matrix[i][j]));
+                        }
+                        matrixOutput.append("\n");
+                    }
+
+                    resultLab3TextArea.setText(matrixOutput +
+                            "\nКоличество отрицательных элементов в строках, содержащих ноль: " + result);
+
+                } else if (e.getSource() == maxAverageButton) {
+                    String result = Lab3.MatrixLab3.max_average_in_columns(matrix);
+
+                    // Форматируем вывод матрицы
+                    StringBuilder matrixOutput = new StringBuilder();
+                    matrixOutput.append("Матрица ").append(rows).append("x").append(cols).append(":\n");
+
+                    // Определяем максимальную длину числа для выравнивания
+                    int maxLength = 0;
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
+                            int length = String.valueOf(matrix[i][j]).length();
+                            if (length > maxLength) maxLength = length;
+                        }
+                    }
+
+                    // Выводим матрицу
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
+                            matrixOutput.append(String.format("%" + (maxLength + 2) + "d", matrix[i][j]));
+                        }
+                        matrixOutput.append("\n");
+                    }
+
+                    resultLab3TextArea.setText(matrixOutput + "\nМаксимальное среднее арифметическое среди столбцов: " + result);
+                }
+
+            } catch (Exception ex) {
+                resultLab3TextArea.setText("Ошибка: " + ex.getMessage() +
+                        "\n\nФормат ввода матрицы:\n" +
+                        "• Элементы в строке разделяйте пробелами\n" +
+                        "• Каждая строка матрицы - с новой строки\n" +
+                        "• Все элементы должны быть целыми числами\n\n" +
+                        "Пример матрицы 3x4:\n" +
+                        "1 2 -3 0\n" +
+                        "-5 0 7 8\n" +
+                        "9 10 -11 12");
             }
         };
 
