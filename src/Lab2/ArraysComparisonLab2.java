@@ -104,5 +104,6 @@ public class ArraysComparisonLab2 {
         System.out.println(Arrays.toString(array2));
 
         System.out.println("Поиск " + value + " во втором массиве бинарным поиском: " + binary_search(value));
+        System.out.println("Смерженные массивы: " + Arrays.toString(merge_arrays()));
     }
 }
