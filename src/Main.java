@@ -16,7 +16,7 @@ void main() {
     System.out.println();
 
     System.out.println("Лабораторная 2. Задание 3");
-    Lab2.SortWordLab2.bubble_sort();
+    Lab2.SortWordLab2.bubble_sort("Слово");
     System.out.println();
 
     System.out.println("Лабораторная 3. Задание 1");
