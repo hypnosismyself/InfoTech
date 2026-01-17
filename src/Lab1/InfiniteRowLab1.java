@@ -6,9 +6,11 @@ public class InfiniteRowLab1 {
     private final static double Xn = 0.1, Xk = 0.9, prdX = 0.1;
     private final static double eps = 0.0001;
 
-    public static void get_row() {
+    public static String calc() {
+        StringBuilder res = new StringBuilder();
+
         double x = Xn;
-        System.out.println("\tx\t\ty");
+        res.append("x\t\ty\n");
 
         while (x <= Xk) {
             double T = 1, y = 0;
@@ -20,10 +22,11 @@ public class InfiniteRowLab1 {
                 n += 1;
             }
 
-            System.out.printf("%.3f", x);
-            System.out.println("\t\t" + String.format("%.3f", y));
+            res.append(String.format("%.3f", x)).append("\t\t").append(String.format("%.3f", y)).append("\n");
 
             x += prdX;
         }
+
+        return res.toString();
     }
 }
