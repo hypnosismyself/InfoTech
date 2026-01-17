@@ -8,8 +8,8 @@ public class ArraysComparisonLab2 {
     // предварительно отсортировав этот массив методом вставки.
     // Первый массив отсортировать затем выбором наименьшего элемента. Произвести слияние полученных массивов
 
-    private static int[] array1 = {12, 14, 22, 4};
-    private static int[] array2 = {0, 1, 4, 5};
+    private static final int[] array1 = {12, 14, 22, 4};
+    private static final int[] array2 = {0, 1, 4, 5};
 
     private static int sequential_search_with_barrier(int value) {
         // Поиск последовательным перебором
