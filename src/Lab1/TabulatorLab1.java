@@ -28,7 +28,7 @@ public class TabulatorLab1 {
                 y = Math.pow(Math.log(a * x + b), 2) - 2.75 * ((a * b * x) / Math.sqrt(a * a + b * x));
             }
 
-            res.append(String.format("%.3f", x)).append("\t\t\t").append(String.format("%.3f", y)).append("\n");
+            res.append(String.format("%.3f", x)).append("\t\t").append(String.format("%.3f", y)).append("\n");
 
             x += dX;
         }
