@@ -8,11 +8,14 @@ public class TabulatorLab1 {
 
     private final static double Xn=-0.16, Xk=1, dX=0.2;
 
-    public static void get_tab() {
-        System.out.println("\tx\t\ty");
+    public static String calc()
+    {
+        StringBuilder res = new StringBuilder();
 
         double x = Xn;
         double y;
+
+        res.append("x\t\t\ty\n");
 
         while (x <= Xk) {
             if (a * x < b) {
@@ -25,10 +28,11 @@ public class TabulatorLab1 {
                 y = Math.pow(Math.log(a * x + b), 2) - 2.75 * ((a * b * x) / Math.sqrt(a * a + b * x));
             }
 
-            System.out.printf("%.3f", x);
-            System.out.println("\t\t" + String.format("%.3f", y));
+            res.append(String.format("%.3f", x)).append("\t\t\t").append(String.format("%.3f", y)).append("\n");
 
             x += dX;
         }
+
+        return res.toString();
     }
 }
