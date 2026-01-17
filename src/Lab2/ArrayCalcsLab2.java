@@ -1,16 +1,15 @@
 package Lab2;
 
 public class ArrayCalcsLab2 {
-    static final double[] raw_array = {5, 4.4, 0, -5, 12.5};
-
     public static void calc() {
         // Получить ответ
+        double[] array = {1.1, -2, 3.5, 4,643, -5.5, 6, 7};
 
-        System.out.println("Произведение всех положительных чисел: " + get_positives_multiplication());
-        System.out.println("Сумма чисел до минимального элемента: " + sum_before_min_element());
+        System.out.println("Произведение всех положительных чисел: " + get_positives_multiplication(array));
+        System.out.println("Сумма чисел до минимального элемента: " + sum_before_min_element(array));
     }
 
-    private static double get_positives_multiplication() {
+    public static String get_positives_multiplication(double[] raw_array) {
         // Произведение всех положительных чисел
 
         double res = 1;
@@ -21,10 +20,10 @@ public class ArrayCalcsLab2 {
             }
         }
 
-        return res;
+        return Double.toString(res);
     }
 
-    private static double sum_before_min_element() {
+    public static String sum_before_min_element(double[] raw_array) {
         // Сумма чисел до минимального элемента
 
         double minElement = Double.MAX_VALUE;
@@ -42,6 +41,6 @@ public class ArrayCalcsLab2 {
             res += raw_array[i];
         }
 
-        return res;
+        return Double.toString(res);
     }
 }

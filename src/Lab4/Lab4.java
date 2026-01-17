@@ -7,9 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Lab4 extends JFrame {
-    private JTextField array1Field;
-    private JTextField array2Field;
-    private JTextField valueField;
+    private final JTabbedPane tabbedPane = new JTabbedPane();
+
     private JTextField wordField;
     private JTextField matrixField;
 
@@ -21,60 +20,8 @@ public class Lab4 extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-
-        // Вкладка 1: Бесконечные ряды, таблица функции
-        GridLayout gridLab1 = new GridLayout(3, 3, 20, 10);
-        JPanel infiniteRowsPanel = new JPanel(gridLab1);
-        JTextArea resultLab1TextArea = new JTextArea();
-
-        JButton calcInfiniteRowsButton = new JButton("Вычислить ");
-        calcInfiniteRowsButton.setMaximumSize(new Dimension(200, 50));
-        JButton calcTabulationButton = new JButton("Обработать массивы");
-
-        calcInfiniteRowsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultLab1TextArea.setText(Lab1.TabulatorLab1.calc());
-            }
-        });
-        infiniteRowsPanel.add(calcInfiniteRowsButton);
-
-        calcTabulationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultLab1TextArea.setText(Lab1.InfiniteRowLab1.calc());
-            }
-        });
-        infiniteRowsPanel.add(calcTabulationButton);
-
-        infiniteRowsPanel.add(resultLab1TextArea);
-
-        // Вкладка 1: Массивы
-        JPanel arraysPanel = new JPanel(new BorderLayout());
-        arraysPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        JPanel arraysInputPanel = new JPanel(new GridLayout(3, 2));
-        arraysInputPanel.add(new JLabel("Массив 1:"));
-        array1Field = new JTextField();
-        arraysInputPanel.add(array1Field);
-        arraysInputPanel.add(new JLabel("Массив 2:"));
-        array2Field = new JTextField();
-        arraysInputPanel.add(array2Field);
-        arraysInputPanel.add(new JLabel("Значение:"));
-        valueField = new JTextField();
-        arraysInputPanel.add(valueField);
-
-        JButton arraysButton = new JButton("Обработать массивы");
-        arraysButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processArrays();
-            }
-        });
-        arraysInputPanel.add(arraysButton);
-
-        arraysPanel.add(arraysInputPanel, BorderLayout.CENTER);
+        makeLab1GUI();
+        makeLab2GUI();
 
         // Вкладка 2: Слово
         JPanel wordPanel = new JPanel(new BorderLayout());
@@ -116,37 +63,121 @@ public class Lab4 extends JFrame {
 
         matrixPanel.add(matrixInputPanel, BorderLayout.CENTER);
 
-        tabbedPane.addTab("Лабораторная 1", infiniteRowsPanel);
-        tabbedPane.addTab("Массивы", arraysPanel);
         tabbedPane.addTab("Слово", wordPanel);
         tabbedPane.addTab("Матрица", matrixPanel);
 
         add(tabbedPane);
     }
 
-    private void processArrays() {
-//        String array1Str = array1Field.getText();
-//        String array2Str = array2Field.getText();
-//        String valueStr = valueField.getText();
-//
-//        String[] array1Parts = array1Str.split(",");
-//        String[] array2Parts = array2Str.split(",");
-//
-//        int[] array1 = new int[array1Parts.length];
-//        int[] array2 = new int[array2Parts.length];
-//
-//        for (int i = 0; i < array1Parts.length; i++) {
-//            array1[i] = Integer.parseInt(array1Parts[i].trim());
-//        }
-//
-//        for (int i = 0; i < array2Parts.length; i++) {
-//            array2[i] = Integer.parseInt(array2Parts[i].trim());
-//        }
-//
-//        int value = Integer.parseInt(valueStr);
-//
-//        ArrayProcessor processor = new ArrayProcessor(array1, array2);
-//        processor.processArrays(value);
+    private void makeLab1GUI() {
+        // Вкладка 1: Бесконечные ряды, таблица функции
+
+        GridLayout gridLab1 = new GridLayout(3, 3, 20, 10);
+        JPanel infiniteRowsPanel = new JPanel(gridLab1);
+        JTextArea resultLab1TextArea = new JTextArea();
+        resultLab1TextArea.setEditable(false);
+
+        JButton calcInfiniteRowsButton = new JButton("Вычислить ");
+        calcInfiniteRowsButton.setMaximumSize(new Dimension(200, 50));
+        JButton calcTabulationButton = new JButton("Обработать массивы");
+
+        calcInfiniteRowsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultLab1TextArea.setText(Lab1.TabulatorLab1.calc());
+            }
+        });
+        infiniteRowsPanel.add(calcInfiniteRowsButton);
+
+        calcTabulationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultLab1TextArea.setText(Lab1.InfiniteRowLab1.calc());
+            }
+        });
+
+        infiniteRowsPanel.add(calcTabulationButton);
+        infiniteRowsPanel.add(resultLab1TextArea);
+        tabbedPane.addTab("Лабораторная 1", infiniteRowsPanel);
+    };
+
+    private void makeLab2GUI() {
+        // Вкладка 2: Вычисления для массивов
+
+        GridLayout gridLab2 = new GridLayout(4, 1, 20, 10);
+        JPanel lab2Panel = new JPanel(gridLab2);
+        JTextArea resultLab2TextArea = new JTextArea();
+        resultLab2TextArea.setEditable(false);
+
+        JLabel inputLabel = new JLabel("Введите массив чисел через пробел:");
+        inputLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        JTextField inputArrayField = new JTextField();
+        inputArrayField.setText("1.1 -2 3.5 4,643 -5.5 6 7");
+
+        JButton calcPositivesMultiplicationButton = new JButton("Произведение положительных");
+        calcPositivesMultiplicationButton.setMaximumSize(new Dimension(200, 50));
+        JButton sumBeforeMinButton = new JButton("Сумма до минимального");
+
+        ActionListener parseAndProcess = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double[] array = parseStringToDoubleArray(inputArrayField.getText());
+
+
+                JButton source = (JButton) e.getSource();
+                if (source == calcPositivesMultiplicationButton) {
+                    String result = Lab2.ArrayCalcsLab2.get_positives_multiplication(array);
+                    resultLab2TextArea.setText("Произведение положительных элементов: " + result);
+                } else if (source == sumBeforeMinButton) {
+                    String result = Lab2.ArrayCalcsLab2.sum_before_min_element(array);
+                    resultLab2TextArea.setText("Сумма элементов до минимального: " + result);
+                }
+            }
+        };
+
+        calcPositivesMultiplicationButton.addActionListener(parseAndProcess);
+        sumBeforeMinButton.addActionListener(parseAndProcess);
+
+        lab2Panel.add(inputLabel);
+        lab2Panel.add(inputArrayField);
+        lab2Panel.add(calcPositivesMultiplicationButton);
+        lab2Panel.add(sumBeforeMinButton);
+
+        JScrollPane scrollPane = new JScrollPane(resultLab2TextArea);
+        scrollPane.setPreferredSize(new Dimension(400, 150));
+        lab2Panel.add(scrollPane);
+
+        tabbedPane.addTab("Лабораторная 2", lab2Panel);
+    }
+
+    private double[] parseStringToDoubleArray(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new double[0]; // возвращаем пустой массив
+        }
+
+        // Удаляем пробелы в начале и конце
+        String trimmed = input.trim();
+
+        // Разделяем строку по запятым
+        String[] parts = trimmed.split(" ");
+
+        // Создаем массив для результата
+        double[] result = new double[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i].trim();
+
+            part = part.replace(',', '.');
+
+            try {
+                result[i] = Double.parseDouble(part);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(
+                        String.format("Неверный формат числа '%s' на позиции %d", parts[i], i + 1), e);
+            }
+        }
+
+        return result;
     }
 
     private void processWord() {

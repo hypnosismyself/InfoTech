@@ -11,7 +11,7 @@ public class MatrixLab3 {
             {8, 9, 10, 11}
     };
 
-    private static int count_negative_in_zero_rows() {
+    public static String count_negative_in_zero_rows() {
         // Определить количество отрицательных элементов в строках с нулевыми элементами
 
         int count = 0;
@@ -31,10 +31,10 @@ public class MatrixLab3 {
                 }
             }
         }
-        return count;
+        return Double.toString(count);
     }
 
-    private static double max_average_in_columns() {
+    public static String max_average_in_columns() {
         // Определить максимальное значение среди средних арифметических значений в каждом столбце матрицы
 
         double maxAverage = Double.NEGATIVE_INFINITY;
@@ -48,7 +48,7 @@ public class MatrixLab3 {
                 maxAverage = average;
             }
         }
-        return maxAverage;
+        return Double.toString(maxAverage);
     }
 
     public static void calc() {
